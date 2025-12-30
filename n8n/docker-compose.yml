@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    build: .
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=false
+      - N8N_ALLOW_COMMAND_EXECUTION=true
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - N8N_FILESYSTEM_ALLOWED_PATHS=/files
+    volumes:
+      - ../:/files
+      - ./n8n_data:/home/node/.n8n
+      - ./n8n_files:/home/node/.n8n-files
+    restart: unless-stopped
